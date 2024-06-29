@@ -1,0 +1,16 @@
+CREATE TABLE IF NOT EXISTS indicators(
+	id SERIAL PRIMARY KEY,
+	type TEXT NOT NULL,
+	value TEXT NOT NULL,
+	comment TEXT,
+	date TEXT NOT NULL,
+	actor INTEGER NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS actors(
+	id SERIAL PRIMARY KEY,
+	name TEXT NOT NULL,
+	aliases TEXT[]
+);
+
+INSERT INTO actors (name) VALUES ('Unknown');
