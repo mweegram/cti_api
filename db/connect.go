@@ -24,7 +24,7 @@ type Actor struct {
 }
 
 func Database_Connect() (*pgx.Conn, error) {
-	_ = godotenv.Load(".env")
+	godotenv.Load(".env")
 	db, err := pgx.Connect(context.Background(), os.Getenv("DB_STRING"))
 	if err != nil {
 		return nil, err
