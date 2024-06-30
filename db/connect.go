@@ -17,6 +17,22 @@ type Indicator struct {
 	Actor   int
 }
 
+type Indicator_TextualActor struct {
+	ID      int
+	Type    string
+	Value   string
+	Comment string
+	Date    string
+	Actor   string
+}
+
+type Actor_Summary struct {
+	ID         int
+	Name       string
+	Aliases    []string
+	Indicators []Indicator
+}
+
 type Actor struct {
 	ID      int
 	Name    string

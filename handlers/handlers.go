@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"context"
 	"errors"
 	"net/http"
 	"slices"
@@ -49,4 +50,99 @@ func Create_Indicator_Handler(c echo.Context) error {
 	}
 
 	return c.String(http.StatusAccepted, "New Indicator Created.")
+}
+
+func Create_Actor_Handler(c echo.Context) error {
+	new_actor := db.Actor{
+		Name: c.FormValue("name"),
+	}
+
+	if new_actor.Name == "" {
+		return errors.New("cannot have blank name")
+	}
+
+	err := logic.Create_Actor(new_actor)
+	if err != nil {
+		return err
+	}
+
+	return c.String(http.StatusAccepted, "New actor added.")
+}
+
+func Create_Alias_Handler(c echo.Context) error {
+	threat_actor_str := c.Param("actor")
+	if threat_actor_str == "" {
+		return errors.New("invalid threat actor")
+	}
+
+	threat_actor, err := strconv.Atoi(threat_actor_str)
+	if err != nil {
+		return err
+	}
+
+	new_alias := c.FormValue("alias")
+	if new_alias == "" {
+		return errors.New("invalid alias")
+	}
+
+	database, err := db.Database_Connect()
+	if err != nil {
+		return err
+	}
+
+	var cur_aliases []string
+
+	err = database.QueryRow(context.Background(), "SELECT aliases FROM actors WHERE id = $1", threat_actor).Scan(&cur_aliases)
+	if err != nil {
+		return err
+	}
+
+	if slices.Contains(cur_aliases, new_alias) {
+		return errors.New("alias already exists")
+	}
+
+	err = logic.Create_Alias(threat_actor, new_alias)
+	if err != nil {
+		return err
+	}
+
+	return c.String(http.StatusAccepted, "Alias added.")
+}
+
+func Get_Indicator_Handler(c echo.Context) error {
+	indicator_id_str := c.Param("id")
+	if indicator_id_str == "" {
+		return errors.New("invalid threat id")
+	}
+
+	indicator_id, err := strconv.Atoi(indicator_id_str)
+	if err != nil {
+		return err
+	}
+
+	indicator, err := logic.Get_Indicator(indicator_id)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, indicator)
+}
+
+func Get_Actor_Handler(c echo.Context) error {
+	actor_id_str := c.Param("id")
+	if actor_id_str == "" {
+		return errors.New("invalid threat id")
+	}
+
+	actor_id, err := strconv.Atoi(actor_id_str)
+	if err != nil {
+		return err
+	}
+
+	actor, err := logic.Get_Actor(actor_id)
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, actor)
 }
