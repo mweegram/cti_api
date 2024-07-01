@@ -8,11 +8,12 @@ The platform is Full Trust (as opposed to Zero Trust) and as long as the correct
 
 ## GET ENDPOINTS
 *ALL GET ENDPOINTS WILL RETURN A 200 STATUS CODE IF SUCCESFUL, ELSE 500*
-| Endpoints | Parameters | Request Type | Details |
-|-----------|------------|--------------|---------|
-| /health   | N/A        | GET          | 200 Status Code if database connection is available, else 500.|
-| /indicator/\<Indicator ID>| N/A  | GET | JSON of the specified indicator of compromise's information|
-| /actor/\<Actor ID> | N/A | GET | JSON of the specified Threat Actor's information|
+| Endpoints | Details |
+|-----------|---------|
+| /health | 200 Status Code if database connection is available, else 500.|
+| /indicator/\<Indicator ID>| JSON of the specified indicator of compromise's information|
+| /actor/\<Actor ID> | JSON of the specified Threat Actor's information|
+| /actors | Show all available threat actors, with database IDs and aliases. Useful for getting actor ID to tag IOCs with|
 
 ## POST ENDPOINTS
 *ALL POST ENDPOINTS WILL RETURN A 202 ACCEPTED STATUS CODE IF SUCCESSFUL ELSE 500*  
