@@ -2,11 +2,13 @@ package main
 
 import (
 	"github.com/labstack/echo/v4"
+	"github.com/labstack/echo/v4/middleware"
 	"github.com/mweegram/cti_api/handlers"
 )
 
 func main() {
 	app := echo.New()
+	app.Use(middleware.Logger())
 
 	app.GET("/health", handlers.API_Health)
 	app.GET("/indicator/:id", handlers.Get_Indicator_Handler)
