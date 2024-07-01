@@ -146,3 +146,12 @@ func Get_Actor_Handler(c echo.Context) error {
 
 	return c.JSON(http.StatusOK, actor)
 }
+
+func Get_AllActors_Handler(c echo.Context) error {
+	threat_actors, err := logic.Get_All_Actors()
+	if err != nil {
+		return err
+	}
+
+	return c.JSON(http.StatusOK, threat_actors)
+}

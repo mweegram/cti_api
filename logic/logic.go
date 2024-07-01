@@ -119,3 +119,22 @@ func Get_Actor(Actor_ID int) (db.Actor_Summary, error) {
 
 	return threat_actor_profile, nil
 }
+
+func Get_All_Actors() ([]db.Actor, error) {
+	database, err := db.Database_Connect()
+	if err != nil {
+		return make([]db.Actor, 0), err
+	}
+
+	rows, err := database.Query(context.Background(), "SELECT * FROM actors")
+	if err != nil {
+		return make([]db.Actor, 0), err
+	}
+
+	threat_actors, err := pgx.CollectRows(rows, pgx.RowToStructByName[db.Actor])
+	if err != nil {
+		return make([]db.Actor, 0), err
+	}
+
+	return threat_actors, nil
+}

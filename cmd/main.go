@@ -11,6 +11,7 @@ func main() {
 	app.GET("/health", handlers.API_Health)
 	app.GET("/indicator/:id", handlers.Get_Indicator_Handler)
 	app.GET("/actor/:id", handlers.Get_Actor_Handler)
+	app.GET("/actors", handlers.Get_AllActors_Handler)
 
 	app.POST("/new_indicator", handlers.Create_Indicator_Handler)
 	app.POST("/new_actor", handlers.Create_Actor_Handler)
