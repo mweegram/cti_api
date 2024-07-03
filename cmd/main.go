@@ -19,5 +19,5 @@ func main() {
 	app.POST("/new_actor", handlers.Create_Actor_Handler)
 	app.POST("/new_alias/:actor", handlers.Create_Alias_Handler)
 
-	app.Start("localhost:5000")
+	app.Start("0.0.0.0:5000")
 }
